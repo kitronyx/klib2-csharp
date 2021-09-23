@@ -38,7 +38,7 @@ namespace klib2_test
                     connet = true;
                     thread = new Thread(new ThreadStart(workingthread));
                     thread.Start();
-                    button1.Text = "Disconnect";
+                    Invoke(new MethodInvoker(() => button1.Text = "Disconnect"));
                 }
                 return;
             }
@@ -47,8 +47,9 @@ namespace klib2_test
                 if (klib.Stop())
                 {
                     connet = false;
-                    thread.Abort();
-                    button1.Text = "Connect";
+                    if(sender != null)
+                        thread.Abort();
+                    Invoke(new MethodInvoker(() => button1.Text = "Connect"));
                 }
             }
         }
@@ -99,15 +100,21 @@ namespace klib2_test
                 byte[] data = klib.Read();
 
                 //Form Windows Label View
+                if (data == null)
+                {
+                    button1_Click(null, null);
+                    MessageBox.Show("Disconnect ForceLAB2!", "Connect error!");
+                    return;
+                }
                 for (int i = 0; i <  nCol; ++i)
                 {
                     for (int j = 0; j < nRow; ++j)
                     {
                         if (labels[i][j].Text != data[j * nCol + i].ToString())
-                            labels[i][j].Text = data[j * nCol + i].ToString();
+                            //labels[i][j].Text = data[j * nCol + i].ToString();
+                            Invoke(new MethodInvoker(()=>labelsdatachange(data[j * nCol + i].ToString(), j, i)));
                     }
                 }
-
 
                 //Console Windows Write Code
                 //for (int i = 0; i < nCol; ++i)
@@ -122,6 +129,11 @@ namespace klib2_test
                 //Console.WriteLine();
                 //Console.WriteLine();
             }
+        }
+
+        private void labelsdatachange(string _data,int _x,int _y)
+        {
+            labels[_y][_x].Text = _data;
         }
 
         private void contorolsAdd(Label _label)
