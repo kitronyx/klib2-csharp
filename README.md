@@ -1,4 +1,9 @@
-## Purpose
-API code used in Snowforce and ForceLAB2
+## Klib2-csharp
+API code used in Snowforce3 and ForceLAB2
 
-## Language: C#
+## Development environment
+Language: C#
+Freamwork: .Net Framework 4.6.1
+
+
+
