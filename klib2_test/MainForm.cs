@@ -13,7 +13,7 @@ using KLib2_CSharp;
 
 namespace klib2_test
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         KLib2 klib = new KLib2();
         bool connet = false;
@@ -22,14 +22,14 @@ namespace klib2_test
         int nCol;
         Label[][] labels;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             button1.Text = "Connect";
             this.DoubleBuffered = true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonConnet_Click(object sender, EventArgs e)
         {
             if (!connet)
             {
@@ -63,6 +63,8 @@ namespace klib2_test
 
         private void workingthread()
         {
+            DateTime startTime = DateTime.Now;
+            uint count = 0;
             while(connet)
             {
                 if (nRow == 0)
@@ -71,25 +73,8 @@ namespace klib2_test
                     {
                         nRow = klib.nRow;
                         nCol = klib.nCol;
-                        //Form Windows Label View
-                        labels = new Label[nCol][];
 
                         Invoke(new MethodInvoker(() => { FormResize( nCol, nRow); }));
-                        this.SuspendLayout();
-                        for (int i = 0; i < nCol; ++i)
-                        {
-                            labels[i] = new Label[nRow];
-                            for (int j = 0; j <  nRow; ++j)
-                            {
-                                labels[i][j] = new Label();
-                                labels[i][j].AutoSize = true;
-                                labels[i][j].Name = string.Format("Label{0}_{1}", i, j);
-                                labels[i][j].Text = "0";
-                                labels[i][j].MaximumSize = new Size(100, 100);
-                                labels[i][j].Location = new Point(i * 20, j * 20);
-                                Invoke(new MethodInvoker(() => { contorolsAdd(labels[i][j]); }));
-                            }
-                        }
                         this.ResumeLayout(false);
                         this.PerformLayout();
                         this.Invalidate();
@@ -98,36 +83,38 @@ namespace klib2_test
                 }
                 //get API data
                 byte[] data = klib.Read();
+                StringBuilder dataString = new StringBuilder();
 
                 //Form Windows Label View
                 if (data == null)
                 {
-                    button1_Click(null, null);
+                    buttonConnet_Click(null, null);
                     MessageBox.Show("Disconnect ForceLAB2!", "Connect error!");
                     return;
                 }
-                for (int i = 0; i <  nCol; ++i)
+                for (int j = 0; j < nRow; ++j)
                 {
-                    for (int j = 0; j < nRow; ++j)
+                    for (int i = 0; i < nCol; ++i)
                     {
-                        if (labels[i][j].Text != data[j * nCol + i].ToString())
-                            //labels[i][j].Text = data[j * nCol + i].ToString();
-                            Invoke(new MethodInvoker(()=>labelsdatachange(data[j * nCol + i].ToString(), j, i)));
+                        dataString.Append(data[j * nCol + i].ToString());
                     }
+                    dataString.Append("\n");
+                }
+                dataString.Append("\n");
+
+                this.Invoke(new MethodInvoker(
+                        () => { richTextBoxData.Text = dataString.ToString(); }
+                    )
+                );
+                
+                count++;
+                if(DateTime.Now - startTime > TimeSpan.FromSeconds(1))
+                {
+                    Console.WriteLine(count);
+                    count = 0;
+                    startTime = DateTime.Now;
                 }
 
-                //Console Windows Write Code
-                //for (int i = 0; i < nCol; ++i)
-                //{
-                //    for (int j = 0; j < nRow; ++j)
-                //    {
-                //        Console.Write(data[i * nRow + j].ToString("000")+" ");
-                //    }
-                //    Console.WriteLine();
-                //}
-
-                //Console.WriteLine();
-                //Console.WriteLine();
             }
         }
 

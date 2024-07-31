@@ -1,6 +1,6 @@
 ﻿namespace klib2_test
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 필수 디자이너 변수입니다.
@@ -29,28 +29,54 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
+            this.richTextBoxData = new System.Windows.Forms.RichTextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(713, 12);
+            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.button1.Location = new System.Drawing.Point(5, 5);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(87, 41);
             this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
+            this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.buttonConnet_Click);
+            // 
+            // richTextBoxData
+            // 
+            this.richTextBoxData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBoxData.Location = new System.Drawing.Point(3, 3);
+            this.richTextBoxData.Name = "richTextBoxData";
+            this.richTextBoxData.Size = new System.Drawing.Size(697, 522);
+            this.richTextBoxData.TabIndex = 1;
+            this.richTextBoxData.Text = "";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(700, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(5);
+            this.panel1.Size = new System.Drawing.Size(97, 522);
+            this.panel1.TabIndex = 2;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 528);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.richTextBoxData);
+            this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Name = "Form1";
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -58,6 +84,8 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.RichTextBox richTextBoxData;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
