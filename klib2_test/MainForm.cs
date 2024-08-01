@@ -16,7 +16,8 @@ namespace klib2_test
 {
     public partial class MainForm : Form
     {
-        KLib2 klib = new KLib2();
+        // IP 주소를 입력하여 변경 가능하게 구현
+        KLib2 klib = new KLib2("127.0.0.1");
         bool connet = false;
         Thread thread;
         int nRow;
