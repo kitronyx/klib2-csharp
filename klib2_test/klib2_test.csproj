@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4469A273-58F6-4A3D-8740-619A78532734}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>klib2_test</RootNamespace>
     <AssemblyName>klib2_test</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>

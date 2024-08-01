@@ -96,7 +96,7 @@ namespace klib2_test
                 {
                     for (int i = 0; i < nCol; ++i)
                     {
-                        dataString.Append(data[j * nCol + i].ToString());
+                        dataString.Append( $"{data[j * nCol + i].ToString("000")},");
                     }
                     dataString.Append("\n");
                 }
@@ -116,16 +116,6 @@ namespace klib2_test
                 }
 
             }
-        }
-
-        private void labelsdatachange(string _data,int _x,int _y)
-        {
-            labels[_y][_x].Text = _data;
-        }
-
-        private void contorolsAdd(Label _label)
-        {
-            this.Controls.Add(_label);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
